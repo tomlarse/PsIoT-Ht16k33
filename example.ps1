@@ -57,3 +57,5 @@ $positions = @(
     [pscustomobject]@{x = 7; y = 0}
     [pscustomobject]@{x = 7; y = 6}
 )
+
+$positions | Set-Ht16k33LedOn
