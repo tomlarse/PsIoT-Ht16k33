@@ -49,9 +49,9 @@ function Set-Ht16k33Display {
 function Set-Ht16k33LedOn {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyName = $true)]
         [ValidateRange(0, 7)][int]$x,
-        [Parameter(Mandatory = $true, Position = 1, ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true, Position = 1, ValueFromPipelineByPropertyName = $true)]
         [ValidateRange(0, 7)][int]$y
     )
 
