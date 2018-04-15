@@ -57,7 +57,11 @@ function Set-Ht16k33LedOn {
 
     process {
         $ExistingLeds = (Get-I2CRegister -Device $Device -Register $Rows[$x]).Data
-        Set-I2CRegister -Device $Device -Register $Rows[$x] -Data ($ExistingLeds + $Columns[$y])
+        $Existing = 0
+        foreach ($ExistingLed in $ExistingLeds) {
+            $Existing += $ExistingLed
+        }
+        Set-I2CRegister -Device $Device -Register $Rows[$x] -Data ($Existing + $Columns[$y])
     }
 }
 
