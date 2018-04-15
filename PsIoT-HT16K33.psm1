@@ -70,7 +70,7 @@ function Clear-Ht16k33Screen {
     )
 
     foreach ($Row in $Rows) {
-        Set-I2CRegister $Device -Register $Row -Value 0
+        Set-I2CRegister $Device -Register $Row -Data 0
     }
 }
 
