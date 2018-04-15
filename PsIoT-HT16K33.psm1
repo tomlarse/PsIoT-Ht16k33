@@ -1,4 +1,5 @@
 New-Variable -Name "Rows" -Value 0x0, 0x2, 0x4, 0x6, 0x8, 0xA, 0xC, 0xE -Option Constant -Scope Script
+New-Variable -Name "Columns" -Value 0x80, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40 -Option Constant -Scope Script
 New-Variable -Name "Device" -Scope Script
 
 function Select-Ht16k33Device {
@@ -54,20 +55,15 @@ function Set-Ht16k33LedOn {
         [ValidateRange(0, 7)][int]$y
     )
 
-    begin {
-    }
-
     process {
-    }
-
-    end {
+        $ExistingLeds = (Get-I2CRegister -Device $Device -Register $Rows[$x]).Data
+        Set-I2CRegister -Device $Device -Register $Rows[$x] -Data ($ExistingLeds + $Columns[$y])
     }
 }
 
-function Clear-Ht16k33Screen {
+function Clear-Ht16k33Display {
     [CmdletBinding()]
-    Param(
-    )
+    Param()
 
     foreach ($Row in $Rows) {
         Set-I2CRegister $Device -Register $Row -Data 0
