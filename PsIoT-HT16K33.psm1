@@ -1,10 +1,10 @@
-New-Variable -Name "Rows" -Value [0x0, 0x2, 0x4, 0x6, 0x8, 0xA, 0xC, 0xE] -Option Constant
-New-Variable -Name "Device"
+New-Variable -Name "Rows" -Value [0x0, 0x2, 0x4, 0x6, 0x8, 0xA, 0xC, 0xE] -Option Constant -Scope Script
+New-Variable -Name "Device" -Scope Script
 
 function Select-Ht16k33Device {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)]
+        [Parameter(Position = 0)]
         [int]$DeviceAddress = 0x70
     )
 
