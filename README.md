@@ -1,4 +1,5 @@
 # Simple HT16K33 driver for Powershell-IoT
+Requires https://github.com/PowerShell/PowerShell-IoT
 
 ## Example
 
