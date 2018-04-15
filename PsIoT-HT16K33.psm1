@@ -8,7 +8,7 @@ function Select-Ht16k33Device {
         [int]$DeviceAddress = 0x70
     )
 
-    $Device = Get-I2CDevice -Id $DeviceAddress -FriendlyName LedMatrix
+    $Script:Device = Get-I2CDevice -Id $DeviceAddress -FriendlyName LedMatrix
 
     $Device
 }
