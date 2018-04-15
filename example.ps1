@@ -31,3 +31,29 @@ Set-Ht16k33LedOn 6 5
 Set-Ht16k33LedOn 6 6
 Set-Ht16k33LedOn 7 0
 Set-Ht16k33LedOn 7 6
+
+$positions = @(
+    [pscustomobject]@{x = 0; y = 6}
+    [pscustomobject]@{x = 1; y = 6}
+    [pscustomobject]@{x = 2; y = 3}
+    [pscustomobject]@{x = 2; y = 6}
+    [pscustomobject]@{x = 3; y = 2}
+    [pscustomobject]@{x = 3; y = 3}
+    [pscustomobject]@{x = 3; y = 4}
+    [pscustomobject]@{x = 4; y = 1}
+    [pscustomobject]@{x = 4; y = 2}
+    [pscustomobject]@{x = 4; y = 3}
+    [pscustomobject]@{x = 4; y = 4}
+    [pscustomobject]@{x = 4; y = 5}
+    [pscustomobject]@{x = 5; y = 1}
+    [pscustomobject]@{x = 5; y = 2}
+    [pscustomobject]@{x = 5; y = 4}
+    [pscustomobject]@{x = 5; y = 5}
+    [pscustomobject]@{x = 5; y = 6}
+    [pscustomobject]@{x = 6; y = 0}
+    [pscustomobject]@{x = 6; y = 1}
+    [pscustomobject]@{x = 6; y = 5}
+    [pscustomobject]@{x = 6; y = 6}
+    [pscustomobject]@{x = 7; y = 0}
+    [pscustomobject]@{x = 7; y = 6}
+)
