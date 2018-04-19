@@ -88,13 +88,13 @@ function Set-Ht16k33LedOn {
                 Set-I2CRegister -Device $Script:Device -Register $Script:Rows[$x] -Data ($Existing + $Script:Columns[$y])
             }
             "Columns" {
+                $i = 0
                 foreach ($Column in $Columns) {
                     # Need to convert a string of bits to a number
                     $convertedColumn = [convert]::toint32($Column,2)
 
-                    foreach ($Row in $Script:Rows) {
-                        Set-I2CRegister -Device $Script:Device -Register $Row -Data $ConvertedColumn
-                    }
+                    Set-I2CRegister -Device $Script:Device -Register $Script:Rows[$i] -Data $ConvertedColumn
+                    $i++
                 }
             }
         }
