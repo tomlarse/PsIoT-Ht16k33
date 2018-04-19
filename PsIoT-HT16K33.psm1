@@ -24,7 +24,10 @@ function Select-Ht16k33Device {
 
     $Script:Device = Get-I2CDevice -Id $DeviceAddress -FriendlyName LedMatrix
 
-    $Device
+    #Initialize the oscillator
+    Get-I2CRegister -Device $script:Device -Register 0x21
+
+    $Script:Device
 }
 
 function Set-Ht16k33Display {
@@ -53,11 +56,11 @@ function Set-Ht16k33Display {
 
     process {
         if ($Power -eq "Off") {
-            Get-I2CRegister -Device $Device -Register 0x80
+            Get-I2CRegister -Device $Script:Device -Register 0x80
         }
         else {
-            Get-I2CRegister -Device $Device -Register $BlinkRegister[$BlinkRate]
-            Get-I2CRegister -Device $Device -Register ($BrightnessBase + $Brightness)
+            Get-I2CRegister -Device $Script:Device -Register $BlinkRegister[$BlinkRate]
+            Get-I2CRegister -Device $Script:Device -Register ($BrightnessBase + $Brightness)
         }
     }
 }
@@ -76,12 +79,12 @@ function Set-Ht16k33LedOn {
     process {
         switch ($PsCmdlet.ParameterSetName) {
             "xy" {
-                $ExistingLeds = (Get-I2CRegister -Device $Device -Register $Script:Rows[$x]).Data
+                $ExistingLeds = (Get-I2CRegister -Device $Script:Device -Register $Script:Rows[$x]).Data
                 $Existing = 0
                 foreach ($ExistingLed in $ExistingLeds) {
                     $Existing += $ExistingLed
                 }
-                Set-I2CRegister -Device $Device -Register $Script:Rows[$x] -Data ($Existing + $Script:Columns[$y])
+                Set-I2CRegister -Device $Script:Device -Register $Script:Rows[$x] -Data ($Existing + $Script:Columns[$y])
             }
             "Columns" {
                 foreach ($line in $lines) {
@@ -89,7 +92,7 @@ function Set-Ht16k33LedOn {
                     $convertedColumn = [convert]::toint32($line,2)
 
                     foreach ($Row in $Script:Rows) {
-                        Set-I2CRegister -Device $Device -Register $Row -Data $ConvertedColumn
+                        Set-I2CRegister -Device $Script:Device -Register $Row -Data $ConvertedColumn
                     }
                 }
             }
@@ -101,8 +104,8 @@ function Clear-Ht16k33Display {
     [CmdletBinding()]
     Param()
 
-    foreach ($Row in $Rows) {
-        Set-I2CRegister $Device -Register $Row -Data 0
+    foreach ($Row in $Script:Rows) {
+        Set-I2CRegister $Script:Device -Register $Row -Data 0
     }
 }
 

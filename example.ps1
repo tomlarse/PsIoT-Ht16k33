@@ -59,6 +59,5 @@ $pslogo = @(
 )
 
 $pslogo | Set-Ht16k33LedOn
-$smiley | Set-Ht16k33LedOn
 Set-Ht16k33LedOn -Columns $Sprites.PsLogo
 
