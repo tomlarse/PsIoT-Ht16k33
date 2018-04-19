@@ -58,37 +58,7 @@ $pslogo = @(
     [pscustomobject]@{x = 7; y = 6}
 )
 
-$smiley = @(
-    [pscustomobject]@{x = 0; y = 1}
-    [pscustomobject]@{x = 0; y = 2}
-    [pscustomobject]@{x = 0; y = 3}
-    [pscustomobject]@{x = 0; y = 4}
-    [pscustomobject]@{x = 1; y = 0}
-    [pscustomobject]@{x = 1; y = 5}
-    [pscustomobject]@{x = 2; y = 1}
-    [pscustomobject]@{x = 2; y = 4}
-    [pscustomobject]@{x = 2; y = 6}
-    [pscustomobject]@{x = 2; y = 7}
-    [pscustomobject]@{x = 3; y = 6}
-    [pscustomobject]@{x = 3; y = 7}
-    [pscustomobject]@{x = 4; y = 1}
-    [pscustomobject]@{x = 4; y = 4}
-    [pscustomobject]@{x = 4; y = 6}
-    [pscustomobject]@{x = 4; y = 7}
-    [pscustomobject]@{x = 5; y = 2}
-    [pscustomobject]@{x = 5; y = 3}
-    [pscustomobject]@{x = 5; y = 6}
-    [pscustomobject]@{x = 5; y = 7}
-    [pscustomobject]@{x = 6; y = 1}
-    [pscustomobject]@{x = 6; y = 4}
-    [pscustomobject]@{x = 6; y = 6}
-    [pscustomobject]@{x = 6; y = 7}
-    [pscustomobject]@{x = 7; y = 1}
-    [pscustomobject]@{x = 7; y = 2}
-    [pscustomobject]@{x = 7; y = 3}
-    [pscustomobject]@{x = 7; y = 4}
-)
-
 $pslogo | Set-Ht16k33LedOn
 $smiley | Set-Ht16k33LedOn
+Set-Ht16k33LedOn -Columns $Sprites.PsLogo
 
