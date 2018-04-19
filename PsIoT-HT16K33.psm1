@@ -76,19 +76,19 @@ function Set-Ht16k33LedOn {
     process {
         switch ($PsCmdlet.ParameterSetName) {
             "xy" {
-                $ExistingLeds = (Get-I2CRegister -Device $Device -Register $Rows[$x]).Data
+                $ExistingLeds = (Get-I2CRegister -Device $Device -Register $Script:Rows[$x]).Data
                 $Existing = 0
                 foreach ($ExistingLed in $ExistingLeds) {
                     $Existing += $ExistingLed
                 }
-                Set-I2CRegister -Device $Device -Register $Rows[$x] -Data ($Existing + $Columns[$y])
+                Set-I2CRegister -Device $Device -Register $Script:Rows[$x] -Data ($Existing + $Script:Columns[$y])
             }
             "Columns" {
                 foreach ($line in $lines) {
                     # Need to convert a string of bits to a number
                     $convertedColumn = [convert]::toint32($line,2)
 
-                    foreach ($Row in $Rows) {
+                    foreach ($Row in $Script:Rows) {
                         Set-I2CRegister -Device $Device -Register $Row -Data $ConvertedColumn
                     }
                 }
