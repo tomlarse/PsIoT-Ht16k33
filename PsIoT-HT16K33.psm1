@@ -24,8 +24,9 @@ function Select-Ht16k33Device {
 
     $Script:Device = Get-I2CDevice -Id $DeviceAddress -FriendlyName LedMatrix
 
-    #Initialize the oscillator
-    Get-I2CRegister -Device $script:Device -Register 0x21
+    #Initialize the oscillator and clean the display
+    Get-I2CRegister -Device $script:Device -Register 0x21 | Out-Null
+    Clear-Ht16k33Display
 
     $Script:Device
 }
@@ -87,9 +88,9 @@ function Set-Ht16k33LedOn {
                 Set-I2CRegister -Device $Script:Device -Register $Script:Rows[$x] -Data ($Existing + $Script:Columns[$y])
             }
             "Columns" {
-                foreach ($line in $lines) {
+                foreach ($Column in $Columns) {
                     # Need to convert a string of bits to a number
-                    $convertedColumn = [convert]::toint32($line,2)
+                    $convertedColumn = [convert]::toint32($Column,2)
 
                     foreach ($Row in $Script:Rows) {
                         Set-I2CRegister -Device $Script:Device -Register $Row -Data $ConvertedColumn
