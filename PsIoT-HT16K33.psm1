@@ -116,7 +116,7 @@ function Set-Ht16k33Display {
     Will turn on the LEDs based on the 8 8-bit strings from the array.
 #>
 function Set-Ht16k33LedOn {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Columns")]
     param (
         [Parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyName = $true, ParameterSetName="xy")]
         [ValidateRange(0, 7)][int]$x,
