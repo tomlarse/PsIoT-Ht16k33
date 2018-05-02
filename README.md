@@ -1,3 +1,6 @@
+
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PsIot-Ht16K33.svg)](https://www.powershellgallery.com/packages/PsIoT-Ht16k33/) [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PsIot-Ht16K33.svg)](https://www.powershellgallery.com/packages/PsIoT-Ht16k33/)
+
 # Simple HT16K33 driver for Powershell-IoT
 Requires https://github.com/PowerShell/PowerShell-IoT
 
@@ -6,7 +9,9 @@ Remember to turn on the I2C register on the pi before use. This is done under "I
 ## Example
 
 ```powershell
-Import-Module .\PsIoT-HT16K33.psd1
+#Install from Powershell Gallery
+Install-Module PsIoT-HT16K33 -Scope CurrentUser
+Import-Module PsIoT-HT16k33
 
 #This selects the device on the default 0x70 address. The address can be changed by soldering short A0, A1 or A2 points on the back of the headerboard. Other devices can be selected with the -DeviceAdress parameter.
 Select-Ht16k33Device
