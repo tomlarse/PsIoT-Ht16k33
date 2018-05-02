@@ -12,7 +12,7 @@
 RootModule = 'PsIoT-HT16K33.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.1'
+ModuleVersion = '0.0.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -23,14 +23,11 @@ GUID = '27053717-bfe5-4ce5-ac9a-9b96a48be5ca'
 # Author of this module
 Author = 'Tom-IngeLarsen'
 
-# Company or vendor of this module
-CompanyName = 'Unknown'
-
 # Copyright statement for this module
 Copyright = '(c) 2018 Tom-IngeLarsen. All rights reserved.'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'Simple driver for an HT16K33 LED matrix used with Powershell-IoT'
 
 # Minimum version of the Windows PowerShell engine required by this module
 # PowerShellVersion = ''
@@ -101,7 +98,7 @@ PrivateData = @{
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/tomlarse/PsIoT-Ht16k33'
 
         # A URL to an icon representing this module.
         # IconUri = ''

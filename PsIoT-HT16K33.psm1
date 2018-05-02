@@ -14,10 +14,26 @@ New-Variable -Name "Rows" -Value 0x0, 0x2, 0x4, 0x6, 0x8, 0xA, 0xC, 0xE -Option 
 New-Variable -Name "Columns" -Value 0x80, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40 -Option Constant -Scope Script
 New-Variable -Name "Device" -Scope Script
 
-# Default I2C address for a HT16K33 is 0x70
+<#
+.SYNOPSIS
+    Selects the HT16K33 device that should be managed.
+.DESCRIPTION
+    The default I2C address for a HT16K33 LED matrix is 0x70, but can also be 0x71-0x72 based on the
+    shorting of the A0, A1 or A2 points on the back of the board.
+.EXAMPLE
+    PS C:\> Select-Ht16k33Device
+    Will select the default device at address 0x70
+.EXAMPLE
+    PS C:\> Select-Ht16k33Device -DeviceAddress 0x71
+    Will select the device at address 0x71
+.INPUTS
+    $DeviceAddress
+    [int] with the correct address
+#>
 function Select-Ht16k33Device {
     [CmdletBinding()]
     param (
+        # Default I2C address for a HT16K33 is 0x70
         [Parameter(Position = 0)]
         [int]$DeviceAddress = 0x70
     )
@@ -31,6 +47,18 @@ function Select-Ht16k33Device {
     $Script:Device
 }
 
+<#
+.SYNOPSIS
+    Used to toggle features of the HT16K33 header
+.DESCRIPTION
+    The HT16K33 header has a couple of inbuilt features that can be controlled with
+    this command.
+.EXAMPLE
+    PS C:\> Set-Ht16k33Display -Power On -BlinkRate 1Hz -Brightness 15
+    Turns the display on, sets blinkrate to 1Hz and brightness to 15.
+    Possible values for -BlinkRate are Off, 1Hz, 2Hz and 0.5Hz. Brightness can be set on a scale
+    from 0 to 15.
+#>
 function Set-Ht16k33Display {
     [CmdletBinding()]
     param (
@@ -66,6 +94,27 @@ function Set-Ht16k33Display {
     }
 }
 
+<#
+.SYNOPSIS
+    Turns LEDs on in the matrix.
+.DESCRIPTION
+    Used to turn LEDs on. Either individually or from an array of bits representing columns on the matrix
+.EXAMPLE
+    PS C:\> Set-Ht16k33LedOn -x 0 -y 0
+    Turns on the LED at position 0,0
+.EXAMPLE
+    PS C:\> $Pslogo = @( "00100000",
+    >>                   "00100000",
+    >>                   "00100100",
+    >>                   "00001110",
+    >>                   "00011111",
+    >>                   "10111011",
+    >>                   "10110001",
+    >>                   "10100000"
+    >>      )
+    PS C:\> Set-Ht16k33LedOn -Columns $Pslogo
+    Will turn on the LEDs based on the 8 8-bit strings from the array.
+#>
 function Set-Ht16k33LedOn {
     [CmdletBinding()]
     param (
@@ -101,6 +150,14 @@ function Set-Ht16k33LedOn {
     }
 }
 
+<#
+.SYNOPSIS
+    Clears the display.
+.DESCRIPTION
+    Will turn off all lit LEDs on the matrix.
+.EXAMPLE
+    PS C:\> Clear-Ht16k33Display
+#>
 function Clear-Ht16k33Display {
     [CmdletBinding()]
     Param()

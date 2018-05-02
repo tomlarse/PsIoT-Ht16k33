@@ -1,6 +1,8 @@
 # Simple HT16K33 driver for Powershell-IoT
 Requires https://github.com/PowerShell/PowerShell-IoT
 
+Remember to turn on the I2C register on the pi before use. This is done under "Interfacing Options" in `sudo raspi-config`
+
 ## Example
 
 ```powershell
