@@ -9,7 +9,9 @@ Properties {
 
     $Timestamp = Get-date -uformat "%Y%m%d-%H%M%S"
     $PSVersion = $PSVersionTable.PSVersion.Major
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSProvideCommentHelp", "", Justification = "They are in fact used below")]
     $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSProvideCommentHelp", "", Justification = "They are in fact used below")]
     $lines = '----------------------------------------------------------------------'
 
     $Verbose = @{}
