@@ -1,7 +1,5 @@
 # Nuget key in $ENV:NugetApiKey
-
 # Set-BuildEnvironment from BuildHelpers module has populated ENV:BHProjectName
-
 # Publish to gallery with a few restrictions
 if (
     $env:BHProjectName -and $env:BHProjectName.Count -eq 1 -and
