@@ -9,7 +9,7 @@ if (
 ) {
     Deploy Module {
         By PSGalleryModule {
-            FromSource $ENV:BHProjectName
+            FromSource $ENV:BHPSModulePath
             To PSGallery
             WithOptions @{
                 ApiKey = $ENV:NugetApiKey
@@ -32,7 +32,7 @@ if (
 ) {
     Deploy DeveloperBuild {
         By AppVeyorModule {
-            FromSource $ENV:BHProjectName
+            FromSource $ENV:BHPSModulePath
             To AppVeyor
             WithOptions @{
                 Version = $env:APPVEYOR_BUILD_VERSION
