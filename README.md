@@ -1,5 +1,5 @@
 
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PsIot-Ht16K33.svg)](https://www.powershellgallery.com/packages/PsIoT-Ht16k33/) [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PsIot-Ht16K33.svg)](https://www.powershellgallery.com/packages/PsIoT-Ht16k33/)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PsIot-Ht16K33.svg)](https://www.powershellgallery.com/packages/PsIoT-Ht16k33/) [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PsIot-Ht16K33.svg)](https://www.powershellgallery.com/packages/PsIoT-Ht16k33/)[![Build status](https://ci.appveyor.com/api/projects/status/ikt5okq1g4avag34?svg=true)](https://ci.appveyor.com/project/tomlarse/psiot-ht16k33)
 
 # Simple HT16K33 driver for Powershell-IoT
 Requires https://github.com/PowerShell/PowerShell-IoT
