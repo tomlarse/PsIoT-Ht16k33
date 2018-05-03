@@ -138,24 +138,37 @@ Describe "HT16K33 tests" {
         )
         New-Variable -Name "Rows" -Value 0x0, 0x2, 0x4, 0x6, 0x8, 0xA, 0xC, 0xE
 
-        It "Turns on every column by -Column parameter" {
-            Set-Ht16k33LedOn -Columns $Pslogo
-            Assert-MockCalled -ModuleName PsIoT-HT16K33 -CommandName Set-I2CRegister -Times 8 -Exactly -Scope It
-        }
-
-        It "turns on every column when sprite is received over pipeline" {
-            $Pslogo | Set-Ht16k33LedOn
-            Assert-MockCalled -ModuleName PsIoT-HT16K33 -CommandName Set-I2CRegister -Times 8 -Exactly -Scope It
-        }
-
-        It "correctly translates the values" {
+        Context "Using the -Columns parameter" {
             Set-Ht16k33LedOn -Columns $Pslogo
             $i = 0
             foreach ($column in $Pslogo) {
-                Assert-MockCalled -ModuleName PsIoT-HT16K33 -CommandName Set-I2CRegister -Times 1 -Exactly -Scope It -ParameterFilter {$Register -eq $Rows[$i] -and $Data -eq [convert]::toint32($column, 2)}
+                It "Turns on column $($Rows[$i]/2)" {
+                    Assert-MockCalled -ModuleName PsIoT-HT16K33 -CommandName Set-I2CRegister -Times 1 -Exactly -Scope Context -ParameterFilter {$Register -eq $Rows[$i] -and $Data -eq [convert]::toint32($column, 2)}
+                }
+                $i++
+            }
+        }
+
+        Context "Columns over pipeline" {
+            $Pslogo | Set-Ht16k33LedOn
+            $i = 0
+            foreach ($column in $Pslogo) {
+                It "Turns on column $($Rows[$i]/2)" {
+                    Assert-MockCalled -ModuleName PsIoT-HT16K33 -CommandName Set-I2CRegister -Times 1 -Exactly -Scope Context -ParameterFilter {$Register -eq $Rows[$i] -and $Data -eq [convert]::toint32($column, 2)}
+                }
                 $i++
             }
         }
     }
-}
 
+    Context "Clear the display" {
+        Clear-Ht16k33Display
+        New-Variable -Name "Rows" -Value 0x0, 0x2, 0x4, 0x6, 0x8, 0xA, 0xC, 0xE
+
+        foreach ($column in 0..7) {
+            It "clears column $column" {
+                Assert-MockCalled -ModuleName PsIoT-HT16K33 -CommandName Set-I2CRegister -Times 1 -Exactly -ParameterFilter {$Register -eq $Rows[$column]}
+            }
+        }
+    }
+}
