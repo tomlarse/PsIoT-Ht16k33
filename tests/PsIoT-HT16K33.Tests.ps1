@@ -1,8 +1,6 @@
 $ModuleManifestName = 'PsIoT-HT16K33.psd1'
 $ModuleManifestPath = "$PSScriptRoot\..\$ModuleManifestName"
 
-Remove-Module PsIoT-HT16K33
-
 Import-Module $ModuleManifestPath
 Import-Module Microsoft.PowerShell.IoT
 
