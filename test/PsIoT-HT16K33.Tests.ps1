@@ -1,6 +1,8 @@
 $ModuleManifestName = 'PsIoT-HT16K33.psd1'
 $ModuleManifestPath = "$PSScriptRoot\..\$ModuleManifestName"
 
+Remove-Module PsIoT-HT16K33
+
 Import-Module $ModuleManifestPath
 Import-Module Microsoft.PowerShell.IoT
 
@@ -17,6 +19,7 @@ Describe "HT16K33 tests" {
     Mock -ModuleName PsIoT-HT16K33 Get-I2CRegister {}
 
     Context "Select default device" {
+        Mock Clear-Ht16k33Display -ModuleName PsIoT-HT16K33
         Select-Ht16k33Device
         It "Gets the correct device at address 0x70" {
             Assert-MockCalled Get-I2CDevice -Times 1 -ModuleName PsIoT-HT16K33 -ParameterFilter {$Id -eq 0x70}
@@ -25,11 +28,12 @@ Describe "HT16K33 tests" {
             Assert-MockCalled Get-I2CRegister -Times 1 -ParameterFilter {$Register -eq 0x21} -ModuleName PsIoT-HT16K33
         }
         It "Clears the Display" {
-            Assert-MockCalled Set-I2CRegister -Times 8 -ModuleName PsIoT-HT16K33
+            Assert-MockCalled Clear-Ht16k33Display -Times 1 -ModuleName PsIoT-HT16K33
         }
     }
 
     Context "Select custom device at address 0x71" {
+        Mock Clear-Ht16k33Display -ModuleName PsIoT-HT16K33
         Select-Ht16k33Device -DeviceAddress 0x71
         It "Gets the correct device" {
             Assert-MockCalled Get-I2CDevice -Times 1 -ModuleName PsIoT-HT16K33 -ParameterFilter {$Id -eq 0x71}
@@ -38,7 +42,7 @@ Describe "HT16K33 tests" {
             Assert-MockCalled Get-I2CRegister -Times 1 -ParameterFilter {$Register -eq 0x21} -ModuleName PsIoT-HT16K33
         }
         It "Clears the Display" {
-            Assert-MockCalled Set-I2CRegister -Times 8 -ModuleName PsIoT-HT16K33
+            Assert-MockCalled Clear-Ht16k33Display -Times 1 -ModuleName PsIoT-HT16K33
         }
     }
 
@@ -47,11 +51,8 @@ Describe "HT16K33 tests" {
         It "Sets blinkrate off" {
             Assert-MockCalled Get-I2CRegister -Times 1 -ParameterFilter {$Register -eq 0x81} -ModuleName PsIot-HT16K33
         }
-        It "Sets brightness to 15" {
-            Assert-MockCalled Get-I2CRegister -Times 1 -ParameterFilter {$Register -eq 0xe0 + 15} -ModuleName PsIot-HT16K33
-        }
-        It "only touches two registers" {
-            Assert-MockCalled Get-I2CRegister -Times 2 -Exactly -ModuleName PsIoT-HT16K33
+        It "only sets blinkrate" {
+            Assert-MockCalled Get-I2CRegister -Times 1 -Exactly -ModuleName PsIoT-HT16K33
         }
     }
 
@@ -101,7 +102,7 @@ Describe "HT16K33 tests" {
             It "sets brightness to $i" {
                 Assert-MockCalled Get-I2CRegister -Times 1 -ParameterFilter {$Register -eq 0xe0 + $i} -ModuleName PsIot-HT16K33
             }
-            It "only sets blinkrate" {
+            It "only sets brightness" {
                 Assert-MockCalled Get-I2CRegister -Times 1 -Exactly -ModuleName PsIot-HT16K33
             }
         }
@@ -140,17 +141,6 @@ Describe "HT16K33 tests" {
 
         Context "Using the -Columns parameter" {
             Set-Ht16k33LedOn -Columns $Pslogo
-            $i = 0
-            foreach ($column in $Pslogo) {
-                It "Turns on column $($Rows[$i]/2)" {
-                    Assert-MockCalled -ModuleName PsIoT-HT16K33 -CommandName Set-I2CRegister -Times 1 -Exactly -Scope Context -ParameterFilter {$Register -eq $Rows[$i] -and $Data -eq [convert]::toint32($column, 2)}
-                }
-                $i++
-            }
-        }
-
-        Context "Columns over pipeline" {
-            $Pslogo | Set-Ht16k33LedOn
             $i = 0
             foreach ($column in $Pslogo) {
                 It "Turns on column $($Rows[$i]/2)" {

@@ -65,12 +65,12 @@ function Set-Ht16k33Display {
         [ValidateSet('On', 'Off')]
         [string]$Power,
         [ValidateSet('Off', '2Hz', '1Hz', '0.5Hz')]
-        [string]$BlinkRate = "Off",
+        [string]$BlinkRate,
         [ValidateRange(0, 15)]
-        [int]$Brightness = 15
+        [int]$Brightness=-1
     )
 
-    # The registers that control the inbuilt features on the pack are like quantum
+    # The registers that control the inbuilt features on the pack behave like quantum
     # particles. They change state by being interacted with. Hence the Get- commands
     # in stead of Set-
     Begin {
@@ -87,8 +87,15 @@ function Set-Ht16k33Display {
         if ($Power -eq "Off") {
             Get-I2CRegister -Device $Script:Device -Register 0x80
         }
-        else {
+        elseif ($Power -eq "On" -and $BlinkRate -eq "") {
+            Get-I2CRegister -Device $Script:Device -Register 0x81
+        }
+
+        if ($BlinkRate -ne "") {
             Get-I2CRegister -Device $Script:Device -Register $BlinkRegister[$BlinkRate]
+        }
+
+        if ($Brightness -ge 0) {
             Get-I2CRegister -Device $Script:Device -Register ($BrightnessBase + $Brightness)
         }
     }
