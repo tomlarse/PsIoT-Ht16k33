@@ -57,10 +57,11 @@ Task Test -Depends Init {
 Task Build -Depends Test {
     $lines
     # Load the module, read the exported functions, update the psd1 FunctionsToExport to include exported functions
-    Set-ModuleFunctions -Path $env:BHPSModulePath
+    Set-ModuleFunctions
 
     # Bump the module version
-    Update-Metadata -Path $env:BHPSModuleManifest
+    $Version = Get-NextNugetPackageVersion -Name $env:BHProjectName
+    Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value $Version
 }
 
 Task Deploy -Depends Build {
