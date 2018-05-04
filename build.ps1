@@ -45,5 +45,15 @@ Resolve-Module "Psake", "PSDeploy", "Pester", "BuildHelpers", "Microsoft.Powersh
 
 Set-BuildEnvironment
 
-Invoke-psake .\psake.ps1
+#workaround for nuget issue on PS6. Ensures only deployment to appveyor in ps5
+If ($PSVersionTable.PSVersion.Major -eq 5) {
+    $Params = @{
+        Path    = $ENV:BHProjectPath
+        Force   = $true
+        Recurse = $false # We keep psdeploy artifacts, avoid deploying those : )
+    }
+    Invoke-PSDeploy @Verbose @Params
+} else {
+    Invoke-psake .\psake.ps1
+}
 exit ( [int]( -not $psake.build_success ) )
