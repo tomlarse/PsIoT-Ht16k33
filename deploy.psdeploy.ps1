@@ -18,7 +18,7 @@ if (
         }
     }
 }
-elseif ($PSVersionTable.PSVersion.Major -ge 6) {
+elseif ($PSVersionTable.PSVersion.Major -eq 5) {
     #do nothing
 }
 else {
