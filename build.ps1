@@ -43,7 +43,7 @@ Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
 
 #workaround for nuget issue on PS6. Ensures only deployment to appveyor in ps5
 If ($PSVersionTable.PSVersion.Major -eq 5) {
-    Resolve-Module "Psake", "PSDeploy", "Pester", "BuildHelpers"
+    Resolve-Module "PSDeploy", "BuildHelpers"
 
     Set-BuildEnvironment
 
